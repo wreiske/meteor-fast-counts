@@ -1,14 +1,14 @@
-Meteor Publish Performant Counts
+Meteor Fast Counts
 ================================
 
 A package to help you publish the count of a cursor in near real time.  Interval based counting suitable for very large collections and high user load.
 
 
-## Counter API
+## FastCount API
 
 
 ```
-new Counter(name, cursor, [updateInterval])
+new FastCount(name, cursor, [updateInterval])
 ```
 
 `name` is a string used to fetch the count of the count
@@ -23,12 +23,12 @@ new Counter(name, cursor, [updateInterval])
 
 ### Publish scoped counts
 
-Counts that are specific to a user or parameter must be declared within the publish function.  This will create 1 counter for each user who subscribes.
+Counts that are specific to a user or parameter must be declared within the publish function.  This will create 1 FastCount for each user who subscribes.
 
 
 ```
 Meteor.publish('countPublish', function(someValue) {
-  return new Counter('countCollection', Collection.find({
+  return new FastCount('countCollection', Collection.find({
   	userId:this.userId,
   	someField:someValue
   }));
@@ -44,10 +44,10 @@ Server scoped counts that are defined outside of publish functions are more effi
 
 
 ```
-var counter = new Counter('countCollection', Collection.find({}));
+var fastCounter = new FastCount('countCollection', Collection.find({}));
 
 Meteor.publish('countPublish', function() {
-  return counter;
+  return fastCounter;
 });
 ```
 
@@ -69,7 +69,7 @@ Define a global helper
 ```
 UI.registerHelper("getCount", function(name) {
 	if(name)
-      return Counter.get(name);
+      return FastCount.get(name);
 });
 ```
 
@@ -89,6 +89,7 @@ Inspired by [publish-counts](https://github.com/percolatestudio/publish-counts) 
 
 Performant solution derived directly from [bullet-counter](https://github.com/bulletproof-meteor/bullet-counter/tree/solution)
 
+Fast Count re-write based on code written by https://github.com/nate-strauser/meteor-publish-performant-counts 
 
 License
 =======

@@ -88,7 +88,6 @@ FastCount.prototype.publish = async function (sub) {
   }, self.interval);
 
   sub.onStop(function () {
-    console.log('FastCount.onStop', self.name);
     clearInterval(handle);
   });
 
